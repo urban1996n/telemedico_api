@@ -1,0 +1,20 @@
+security:
+
+    providers:
+        api_key_user_provider:
+            id: App\Security\Provider\ApiKeyUserProvider
+
+    firewalls:
+        main:
+            pattern: ^/api(?!/account/new)(?!/login)(?!/account/check)
+            stateless: true
+            simple_preauth:
+                authenticator: App\Security\Authenticator\ApiKeyAuthenticator
+            provider: api_key_user_provider
+    access_control:
+        # require additional role: ROLE_ADMIN for /api/user beside of apiKey authenticator to manage users accounts
+        # require additional user authentication to manage it's own account( beside register path)
+        - { path: ^/api/users, roles: ROLE_ADMIN }
+        - { path: ^/api/account/changeCredientials, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/account/delete, roles: IS_AUTHENTICATED_FULLY }
+

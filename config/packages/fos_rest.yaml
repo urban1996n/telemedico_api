@@ -1,0 +1,10 @@
+fos_rest:
+    body_listener: true
+    param_fetcher_listener: true
+    allowed_methods_listener: false 
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+    routing_loader:
+        default_format: json
